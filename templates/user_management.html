@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Management</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+  <div class="p-6">
+    <h1 class="text-3xl font-bold mb-6">User Management</h1>
+    <form action="{{ url_for('create_user') }}" method="POST" class="mb-6 bg-white p-4 rounded shadow">
+      <h2 class="text-xl font-semibold mb-4">Add New User</h2>
+      <div class="mb-4">
+        <input type="text" name="username" placeholder="Username" required class="w-full border px-3 py-2 rounded" />
+      </div>
+      <div class="mb-4">
+        <input type="password" name="password" placeholder="Password" required class="w-full border px-3 py-2 rounded" />
+      </div>
+      <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded">Create User</button>
+    </form>
+
+    <div class="bg-white p-4 rounded shadow">
+      <h2 class="text-xl font-semibold mb-4">Existing Users</h2>
+      <ul>
+        {% for user in users %}
+          <li class="flex justify-between items-center border-b py-2">
+            <span>{{ user.username }}</span>
+            <a href="{{ url_for('delete_user', user_id=user._id) }}" class="text-red-500 hover:underline">Delete</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

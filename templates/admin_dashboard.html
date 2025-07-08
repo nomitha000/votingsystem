@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+  <!-- Sidebar and Main Layout -->
+  <div class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-black shadow-lg text-white min-h-screen">
+      <div class="p-6 text-2xl font-bold text-purple-400">VoteSecure</div>
+      <nav class="mt-8">
+        <a href="/admin" class="block px-6 py-3 text-white hover:bg-gray-800 rounded">Results</a>
+        <a href="/admin/users" class="block px-6 py-3 text-white hover:bg-gray-800 rounded">User Management</a>
+        <a href="/admin/analytics" class="block px-6 py-3 text-white hover:bg-gray-800 rounded">Analytics</a>
+        <a href="/logout" class="block px-6 py-3 text-red-400 hover:bg-red-600 rounded">Logout</a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8">
+
+      <!-- Stats -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white shadow rounded-xl p-6">
+          <h2 class="text-gray-500 text-sm mb-2">Total Votes</h2>
+          <p class="text-3xl font-semibold text-purple-600">
+            {{ results | sum(attribute='count') }}
+          </p>
+        </div>
+
+        <div class="bg-white shadow rounded-xl p-6">
+          <h2 class="text-gray-500 text-sm mb-2">Leading Candidate</h2>
+          <p class="text-xl font-semibold text-green-600">
+            {{ top_candidate }}
+          </p>
+        </div>
+
+        <div class="bg-white shadow rounded-xl p-6">
+          <h2 class="text-gray-500 text-sm mb-2">Voter Turnout</h2>
+          {% set total_users = users | length %}
+          {% set total_votes = results | sum(attribute='count') %}
+          {% set turnout = ((total_votes / total_users) * 100) if total_users > 0 else 0 %}
+          <div class="w-full bg-gray-200 h-3 rounded">
+            <div class="bg-purple-500 h-3 rounded" style="width: {{ turnout | round(1) }}%;"></div>
+          </div>
+          <p class="text-sm mt-2 text-gray-700">{{ turnout | round(1) }}% turnout</p>
+        </div>
+      </div>
+
+      <!-- Vote Distribution -->
+      <div class="bg-white shadow rounded-xl p-6">
+        <h2 class="text-xl font-bold mb-4">Vote Distribution</h2>
+
+        {% for candidate in results %}
+          {% set percentage = ((candidate.count / total_votes) * 100) if total_votes > 0 else 0 %}
+          <div class="mb-4">
+            <div class="flex justify-between mb-1">
+              <span class="font-medium">{{ candidate.name }}</span>
+              <span class="text-sm text-gray-600">{{ candidate.count }} votes</span>
+            </div>
+            <div class="w-full bg-gray-200 h-3 rounded">
+              <div class="bg-blue-500 h-3 rounded" style="width: {{ percentage | round(1) }}%;"></div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>

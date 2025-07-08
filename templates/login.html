@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | VoteSecure</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans text-gray-900 min-h-screen flex items-center justify-center">
+
+  <!-- Login Card -->
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-8">
+    <div class="text-center mb-6">
+      <h1 class="text-3xl font-bold text-purple-600">VoteSecure</h1>
+      <p class="text-sm text-gray-500">Sign in to access the system</p>
+    </div>
+
+    <form method="POST" action="/login" class="space-y-4">
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+        <input type="text" id="username" name="username" required
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-purple-500 focus:border-purple-500">
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input type="password" id="password" name="password" required
+          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-purple-500 focus:border-purple-500">
+      </div>
+
+      <button type="submit"
+        class="w-full py-2 px-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow">
+        Sign In
+      </button>
+    </form>
+
+    <p class="mt-4 text-xs text-center text-gray-400">© 2025 VoteSecure. All rights reserved.</p>
+  </div>
+
+</body>
+</html>
